@@ -14,7 +14,7 @@ pipeline {
        sh 'env'
        sh "apk update && apk add git"
        script {
-                    // Get the Git ref and assign it to env.GIT_REF
+                    
                     env.GIT_REF = sh(script: "git describe --tags", returnStdout: true).trim()
                     echo "GIT_REF set to: ${env.GIT_REF}"
                 }
