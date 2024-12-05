@@ -9,6 +9,7 @@ pipeline {
  
  
  stages {
+    //testingt
    stage('see the envs') {
     steps {
        sh 'env'
