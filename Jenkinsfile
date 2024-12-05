@@ -17,6 +17,7 @@ pipeline {
                     //S[POsSP[]]
                     //dadoapdoiap
                     //asdopasdoi
+                    ///adsdpoadaopi
                     env.GIT_REF = sh(script: "git describe --tags", returnStdout: true).trim()
                     echo "GIT_REF set to: ${env.GIT_REF}"
                 }
