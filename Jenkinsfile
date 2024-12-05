@@ -11,6 +11,7 @@ pipeline {
  stages {
   //testin
   //ssakl
+  //
     stage('check out') {
         steps {
             checkout scm
