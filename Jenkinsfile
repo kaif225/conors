@@ -30,7 +30,9 @@ pipeline {
    }
 
    stage('Code Analysis') {
-        agent 'built-in' 
+        agent {
+                label 'master'  // Ensure this runs on the master node as well
+            } 
             environment {
                 scannerHome = tool 'sonar'
             }
@@ -47,7 +49,9 @@ pipeline {
             }
         }
         stage('Quality Gate') {
-          agent 'built-in'
+          agent {
+                label 'master'  // Ensure this runs on the master node as well
+            }
             steps {
                 script {
                     // Wait for SonarQube analysis to complete and check Quality Gate status
