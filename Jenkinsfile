@@ -33,7 +33,12 @@ pipeline {
                 }
     }
    }
-   
+     
+    stage('debug') {
+        steps {
+            echo "GIT_REF value: ${env.GIT_REF}"
+        }
+    } 
     stage('Check Tag') {
             when {
                 expression {
