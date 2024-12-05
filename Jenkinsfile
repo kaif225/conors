@@ -9,8 +9,6 @@ pipeline {
  
  
  stages {
-     //asASAs
-     //asdkasdlk
    stage('see the envs') {
     steps {
        sh 'env'
