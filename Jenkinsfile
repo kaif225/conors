@@ -20,7 +20,7 @@ pipeline {
             when {
                 expression {
                     // Check if the ref is a tag and if it starts with 'v'
-                    return (env.GIT_REF?.startsWith('refs/tags/v'))
+                    return env.GIT_REF?.startsWith('refs/tags/v')
                 }
             }
             steps {
@@ -28,21 +28,6 @@ pipeline {
                 // Your steps here, e.g., building or deploying based on the tag
             }
         }
-
-        stage('Other Tasks') {
-            when {
-                not {
-                    expression {
-                        // If the tag does not start with 'v', do not proceed
-                        return (env.GIT_REF?.startsWith('refs/tags/v'))
-                    }
-                }
-            }
-            steps {
-                echo "Not a tag starting with 'v'. Skipping further pipeline execution."
-            }
-        
-
 
 
    stage('checkout repo') {
@@ -77,4 +62,4 @@ pipeline {
 
 }
 
-}
+
