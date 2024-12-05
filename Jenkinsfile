@@ -8,7 +8,6 @@ pipeline {
  }
  
   environment {
-        add_git = sh(script: "apk update && apk add git", returnStdout: true).trim
         GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
     }
 
@@ -19,6 +18,12 @@ pipeline {
    stage('see the envs') {
     steps {
        sh 'env'
+       sh "apk update && apk add git"
+       script {
+                    // Get the Git ref and assign it to env.GIT_REF
+                    env.GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
+                    echo "GIT_REF set to: ${env.GIT_REF}"
+                }
     }
    }
    
