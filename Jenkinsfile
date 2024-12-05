@@ -11,7 +11,6 @@ pipeline {
  stages {
   //testin
   //
-    stage('check out') {
         stage('Fetch Code') {
             steps {
                 checkout([$class: 'GitSCM',
@@ -23,7 +22,6 @@ pipeline {
                 ])
             }
         }
-    }
    stage('see the envs') {
     steps {
        sh 'env'
