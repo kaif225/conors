@@ -10,8 +10,9 @@ pipeline {
  stages {
   //testin
    stage('see the envs') {
-     sh 'env'
-     
+    steps {
+       sh 'env'
+    }
    }
    
    stage('checkout repo') {
