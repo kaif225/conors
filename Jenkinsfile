@@ -8,6 +8,7 @@ pipeline {
  }
  
   environment {
+        add_git = sh(script: "apk update && apk add git", returnStdout: true).trim
         GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
     }
 
@@ -36,7 +37,6 @@ pipeline {
    stage('php test') {
      steps {
        sh """
-          apk update && apk add git && \
           cp .env.example .env && \
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
