@@ -9,6 +9,7 @@ pipeline {
  
  
  stages {
+     //asASAs
    stage('see the envs') {
     steps {
        sh 'env'
