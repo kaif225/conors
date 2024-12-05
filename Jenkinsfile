@@ -37,7 +37,7 @@ pipeline {
     stage('Check Tag') {
             when {
                 expression {
-                    return env.GIT_REF?.startsWith('v')
+                    return env.GIT_REF && env.GIT_REF.startsWith('v')
                 }
             }
             steps {
