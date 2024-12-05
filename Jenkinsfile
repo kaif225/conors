@@ -9,39 +9,7 @@ pipeline {
  
  
  stages {
-   stage('see the envs') {
-    steps {
-       sh 'env'
-       sh "apk update && apk add git"
-       script {
-                    //S[POsSP[]]
-                    //dadoapdoiap
-                    //asdopasdoi
-                    ///adsdpoadaopi
-                    //asdaosdop
-                    env.GIT_REF = sh(script: "git describe --tags", returnStdout: true).trim()
-                    echo "GIT_REF set to: ${env.GIT_REF}"
-                }
-    }
-   }
-     
-    stage('debug') {
-        steps {
-            echo "GIT_REF value: ${env.GIT_REF}"
-        }
-    } 
-    stage('Check Tag') {
-            when {
-                expression {
-                    return env.GIT_REF && env.GIT_REF.startsWith('v')
-                }
-            }
-            steps {
-                echo "Tag created: ${env.GIT_REF}, starting with 'v'. Running pipeline."
-            }
-        }
-
-
+   
    stage('php test') {
      steps {
        sh """
@@ -54,10 +22,7 @@ pipeline {
 
          
           """
-       
-       
-     
-     
+           
      }
    
    
