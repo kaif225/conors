@@ -7,10 +7,6 @@ pipeline {
  
  }
  
-  environment {
-        GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
-    }
-
  
  stages {
   //testin
