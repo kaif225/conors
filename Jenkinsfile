@@ -6,10 +6,11 @@ pipeline {
      }  
  
  }
-
+ 
   environment {
-        GIT_REF = sh(script: "git describe --tags --exact-match || echo ''", returnStdout: true).trim()
+        GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
     }
+
  
  stages {
   //testin
@@ -32,14 +33,6 @@ pipeline {
         }
 
 
-   stage('checkout repo') {
-     steps {
-       checkout scm
-     
-     }
-   
-   }
-   
    stage('php test') {
      steps {
        sh """
