@@ -9,19 +9,6 @@ pipeline {
  
  
  stages {
-  //testin
-  //
-        stage('Fetch Code') {
-            steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: '**']],
-                    userRemoteConfigs: [[
-                        url: "https://github.com/kaif225/conors.git",
-                        //credentialsId: 'gitlab-repo-scan'
-                    ]]
-                ])
-            }
-        }
    stage('see the envs') {
     steps {
        sh 'env'
