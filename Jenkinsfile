@@ -8,6 +8,7 @@ pipeline {
  }
  
  stages {
+  //testing
    stage('checkout repo') {
      steps {
        checkout scm
