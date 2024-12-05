@@ -21,7 +21,6 @@ pipeline {
    stage('php test') {
      steps {
        sh """
-          cp .env.example .env && \
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
           composer install --no-interaction --prefer-dist && \
