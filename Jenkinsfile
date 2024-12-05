@@ -31,8 +31,12 @@ pipeline {
 
    stage('Code Analysis') {
         agent {
-                label 'master'  // Ensure this runs on the master node as well
-            } 
+      docker {
+            image 'sonarsource/sonar-scanner-cli:latest'
+            args '--user root'
+           }  
+ 
+          }
             environment {
                 scannerHome = tool 'sonar'
             }
@@ -50,8 +54,12 @@ pipeline {
         }
         stage('Quality Gate') {
           agent {
-                label 'master'  // Ensure this runs on the master node as well
-            }
+      docker {
+            image 'sonarsource/sonar-scanner-cli:latest'
+            args '--user root'
+           }  
+ 
+          }
             steps {
                 script {
                     // Wait for SonarQube analysis to complete and check Quality Gate status
