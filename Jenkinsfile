@@ -1,16 +1,17 @@
 pipeline {
- agent {
-  docker {
-         image 'php:8.2.17-cli-alpine3.18'
-         args '--user root'
-     }  
- 
- }
- 
+ agent none 
  
  stages {
    
    stage('php test') {
+      agent {
+  docker {
+         image 'php:8.2.17-cli-alpine3.18'
+         args '--user root'
+       }  
+ 
+    }
+
      steps {
        sh """
           cp .env.example .env && \
@@ -29,6 +30,9 @@ pipeline {
    }
 
    stage('Code Analysis') {
+        agent {
+                label 'master'  // Ensure this runs on the master node as well
+            }
             environment {
                 scannerHome = tool 'sonar'
             }
@@ -45,6 +49,9 @@ pipeline {
             }
         }
         stage('Quality Gate') {
+          agent {
+                label 'master'  // Ensure this runs on the master node as well
+            }
             steps {
                 script {
                     // Wait for SonarQube analysis to complete and check Quality Gate status
@@ -57,6 +64,8 @@ pipeline {
                 }
             }
         }
+
+   
 
  }
 
