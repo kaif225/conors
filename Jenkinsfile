@@ -11,12 +11,6 @@ pipeline {
  stages {
      //asASAs
      //asdkasdlk
-
-    stage('checkout') {
-        steps {
-            checkout scm
-        }
-    } 
    stage('see the envs') {
     steps {
        sh 'env'
