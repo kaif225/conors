@@ -9,6 +9,7 @@ pipeline {
  
  stages {
   //testin
+  //ssakl
    stage('see the envs') {
     steps {
        sh 'env'
