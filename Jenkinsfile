@@ -9,6 +9,11 @@ pipeline {
  
  stages {
   //testin
+   stage('see the envs') {
+     sh 'env'
+     
+   }
+   
    stage('checkout repo') {
      steps {
        checkout scm
