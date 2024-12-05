@@ -10,7 +10,6 @@ pipeline {
  
  stages {
   //testin
-  //ssakl
   //
     stage('check out') {
         stage('Fetch Code') {
