@@ -6,6 +6,10 @@ pipeline {
      }  
  
  }
+
+  environment {
+        GIT_REF = sh(script: "git describe --tags --exact-match || echo ''", returnStdout: true).trim()
+    }
  
  stages {
   //testin
@@ -19,13 +23,11 @@ pipeline {
     stage('Check Tag') {
             when {
                 expression {
-                    // Check if the ref is a tag and if it starts with 'v'
-                    return env.GIT_REF?.startsWith('refs/tags/v')
+                    return env.GIT_REF?.startsWith('v')
                 }
             }
             steps {
                 echo "Tag created: ${env.GIT_REF}, starting with 'v'. Running pipeline."
-                // Your steps here, e.g., building or deploying based on the tag
             }
         }
 
@@ -38,7 +40,7 @@ pipeline {
    
    }
    
-   
+   /*
    stage('php test') {
      steps {
        sh """
@@ -56,7 +58,7 @@ pipeline {
    
    
    }
- 
+ */
  }
 
 
