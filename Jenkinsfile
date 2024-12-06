@@ -44,8 +44,8 @@ pipeline {
                 script {
                     withSonarQubeEnv('sonar') {
                         sh "${scannerHome}/bin/sonar-scanner \
-                             -Dsonar.projectKey=cronors \
-                             -Dsonar.projectName=cronors \
+                             -Dsonar.projectKey=cronos \
+                             -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0"
                     }
