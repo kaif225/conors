@@ -17,7 +17,7 @@ pipeline {
                     //asdopasdoi
                     ///adsdpoadaopi
                     //asdaosdop
-                    //adiaopdpaodoapi
+    
                     env.GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
                     echo "GIT_REF set to: ${env.GIT_REF}"
                 }
