@@ -12,12 +12,6 @@ pipeline {
        sh 'env'
        sh "apk update && apk add git"
        script {
-                    //S[POsSP[]]
-                    //dadoapdoiap
-                    //asdopasdoi
-                    ///adsdpoadaopi
-                    //asdaosdop
-    
                     env.GIT_REF = sh(script: "git describe --tags --exact-match", returnStdout: true).trim()
                     echo "GIT_REF set to: ${env.GIT_REF}"
                 }
@@ -31,6 +25,9 @@ pipeline {
             }
             steps {
                 echo "Tag created: ${env.GIT_REF}, starting with 'v'. Running pipeline."
+                script {
+                   sh "docker build -t image_name:${env.GIT_REF} ."
+                }
             }
         }
     }
