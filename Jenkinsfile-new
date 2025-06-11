@@ -84,6 +84,25 @@ pipeline {
           --format template --template "@contrib/html.tpl" \\
           --output /report/trivy-critical.html /report/trivy-critical.json
         """
+         publishHTML([
+            allowMissing: true,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: "${env.FOLDER}",
+            reportFiles: 'trivy-image-critical.html',
+            reportName: 'Critical Vulnerabilities',
+            useWrapperFileDirectly: true
+        ])
+
+        publishHTML([
+            allowMissing: true,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: "${env.FOLDER}",
+            reportFiles: 'trivy-image-medium.html',
+            reportName: 'Medium/Low Vulnerabilities',
+            useWrapperFileDirectly: true
+        ])
                 }
             }
         }
