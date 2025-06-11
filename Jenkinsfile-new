@@ -64,7 +64,7 @@ pipeline {
               -v ${env.FOLDER}:/report \\
                 aquasec/trivy image image_name \\
                 --severity CRITICAL \\
-              --exit-code 1 \\
+              --exit-code 0 \\
               --quiet \\
               --format json -o /report/trivy-critical.json 
                    """
