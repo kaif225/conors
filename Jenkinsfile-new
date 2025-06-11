@@ -30,7 +30,7 @@ pipeline {
                 --prettyPrint''', odcInstallation: 'DP-check'
             }
         }
- */
+ 
         stage('Image build') {
             agent {
                 docker {
@@ -45,7 +45,7 @@ pipeline {
                   """
             }
         }
-
+*/
         stage('Trivy Scanning') {
             steps {
                 sh """
@@ -56,7 +56,7 @@ pipeline {
               --severity LOW,MEDIUM,HIGH \\
               --exit-code 0 \\
               --quiet \\
-              --format json -o trivy-High-Medium-Low.json
+              --format json -o /report/trivy-High-Medium-Low.json
               
               docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
               -v ${WORKSPACE}/report:/report \\
@@ -64,7 +64,7 @@ pipeline {
                 --severity CRITICAL \\
               --exit-code 1 \\
               --quiet \\
-              --format json -o trivy-critical.json
+              --format json -o /report/trivy-critical.json
 
               docker run --rm   \\
               -v ${WORKSPACE}/report:/report \\ 
