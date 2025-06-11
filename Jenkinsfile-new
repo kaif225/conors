@@ -21,14 +21,13 @@ pipeline {
         '''
             }
         }
-
          stage('Owasp dependency checking') {
             steps {
                 dependencyCheck additionalArguments: '''
                 --scan \'./\'
                 --out \'./\'
                 --format \'ALL\'
-                --prettyPrint''', odcInstallation: 'DP-check'
+                --prettyPrint''', odcInstallation: 'Owasp'
             }
         }
 
