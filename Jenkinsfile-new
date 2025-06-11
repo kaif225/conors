@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+         stage('Owasp dependency checking') {
+            steps {
+                dependencyCheck additionalArguments: '''
+                --scan \'./\'
+                --out \'./\'
+                --format \'ALL\'
+                --prettyPrint''', odcInstallation: 'DP-check'
+            }
+        }
+
+        stage('Image build') {
+            agent {
+                docker {
+                    image 'docker:latest'
+                    args '--user root'
+                }
+            }
+            steps {
+               sh """
+                  docker build -t image_name .
+                  """
+            }
+        }
+
+        stage('Trivy Scanning') {
+            steps {
+                sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+              -v ${WORKSPACE}:/root/.cache/ \
+              aquasec/trivy image image_name \
+              --severity LOW,MEDIUM,HIGH \
+              --exit-code 0 \
+              --quiet \
+              --format json -o trivy-High-Medium-Low.json
+
+              docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+              -v ${WORKSPACE}:/root/.cache/ \
+                aquasec/trivy image image_name \
+                --severity CRITICAL \
+              --exit-code 1 \
+              --quiet \
+              --format json -o trivy-critical.json
+
+                   """
+            }
+        }
+    }
+}
