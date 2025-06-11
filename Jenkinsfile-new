@@ -28,7 +28,7 @@ pipeline {
                 --scan \'./\'
                 --out \'./\'
                 --format \'ALL\'
-                --prettyPrint''', odcInstallation: 'Owasp'
+                --prettyPrint''', odcInstallation: 'DP-check'
             }
         }
 
