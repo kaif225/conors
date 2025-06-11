@@ -1,7 +1,10 @@
 pipeline {
-    agent any  
+    agent any
+    environment {
+        FOLDER = '/home/kaif/jenkins-server-compose/jenkins_home/workspace/owasp-trivy_main/report'
+    }
     stages {
-       /*
+        /*
         stage('installing required packages') {
             agent {
                docker {
@@ -50,7 +53,7 @@ pipeline {
             steps {
                 sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-              -v ${WORKSPACE}/report:/report \\
+              -v ${env.FOLDER}:/report \\
               aquasec/trivy image image_name \\
               --severity LOW,MEDIUM,HIGH \\
               --exit-code 0 \\
@@ -58,25 +61,38 @@ pipeline {
               --format json -o /report/trivy-High-Medium-Low.json
               
               docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-              -v ${WORKSPACE}/report:/report \\
+              -v ${env.FOLDER}/report:/report \\
                 aquasec/trivy image image_name \\
                 --severity CRITICAL \\
               --exit-code 1 \\
               --quiet \\
               --format json -o /report/trivy-critical.json
 
-              docker run --rm   \\
-              -v ${WORKSPACE}/report:/report \\ 
-               aquasec/trivy convert \\
-              --format template   --template "@contrib/html.tpl"  \\
-              --output /report/trivy-image-medium.html   /report/trivy-High-Medium-Low.json
+              
 
               docker run --rm  \\ 
-             -v ${WORKSPACE}/report:/report \\ 
+             -v ${env.FOLDER}/report:/report \\ 
               aquasec/trivy convert \\
               --format template   --template "@contrib/html.tpl"  \\
                --output /report/trivy-critical.json   /report/trivy-critical.json            
                    """
+            }
+            post {
+                always {
+                    sh """
+            docker run --rm   \\
+              -v ${env.FOLDER}/report:/report \\ 
+               aquasec/trivy convert \\
+              --format template   --template "@contrib/html.tpl"  \\
+              --output /report/trivy-image-medium.html   /report/trivy-High-Medium-Low.json
+
+            docker run --rm  \\ 
+             -v ${env.FOLDER}/report:/report \\ 
+              aquasec/trivy convert \\
+              --format template   --template "@contrib/html.tpl"  \\
+               --output /report/trivy-critical.json   /report/trivy-critical.json 
+            """
+                }
             }
         }
     }
